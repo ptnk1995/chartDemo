@@ -3522,15 +3522,6 @@ window.onload = function () {
     var data1 = [[12.3, 1.4, 2], [3.5, 14.4, 20], [3.2, 18, 13], [4.5, 5.1, 5.2], [4.5, 5.1, 5.2]];
     var typeChart1 = "columnChartTemplate1";
 
-    // class SeriOption
-    // {
-    //     constructor(primaryAxis = true, secondaryAxis, gapWidth, serisOverlap){
-    //         this.primaryAxis = primaryAxis;
-    //         this.secondaryAxis = secondaryAxis;
-    //         this.gapWidth = gapWidth;
-    //         this.serisOverlap = serisOverlap;
-    //     }
-    // }
     var seriOption = new SeriOption(true, secondAxis, gapWidth);
 
     var optionsBieuDoCot = _defineProperty({
@@ -3595,17 +3586,10 @@ window.onload = function () {
         "seriOption": seriOption
     }, "displayDataTable", true);
 
-    // var chart2 = new Chart(w_canvas, h_canvas, top_canvas2, left_canvas2, location_chart2, 
-    //     w_chart, h_chart, color, category_name, typeChart2, data2, gapWidth, secondAxis,
-    //     displayDataTable, location_legend, w_legend, h_legend, type_horizontal, type_outline, type_vertical);
-    // chart2.draw();
-    // veBieuDo(2, data,
-    // category_name, color, typeChart2, w_canvas, h_canvas, top_canvas2, left_canvas2, location_chart2, w_chart, h_chart,
-    // gridOption, seriOption, displayDataTable = false, location_legend, w_legend, h_legend, dataTable);
-
+    
     // veBieuDo(2, options);
 
-    var typeChart3 = "lineChart_Template1";
+   /* var typeChart3 = "lineChart_Template1";
     var top_canvas3 = 1600;
     var left_canvas3 = 25;
     var type_horizontal = true;
@@ -3615,12 +3599,7 @@ window.onload = function () {
     var location_chart2 = p3;
     var displayDataTable = true;
 
-    // var chart3 = new Chart(w_canvas, h_canvas, top_canvas3, left_canvas2, location_chart2, 
-    //     w_chart, h_chart, color, category_name, typeChart3, data2, gapWidth, secondAxis,
-    //     displayDataTable, location_legend, w_legend, h_legend, type_horizontal, type_outline, type_vertical);
-    // chart3.draw();
-
-    /*var options1 = {
+    var options1 = {
         "w_canvas": 920,
         "h_canvas": 427,
         "top_canvas": top_canvas3,
@@ -3642,8 +3621,9 @@ window.onload = function () {
         "displayDataTable": false
     };
     
-    veBieuDo(3, options1);
-     var myVinyls = {
+    veBieuDo(3, options1);*/
+
+    /*var myVinyls = {
         "Classical music": 8.2,
         "Alternative rock": 3.2,
         "Pop": 1.4,
