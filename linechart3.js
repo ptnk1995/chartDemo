@@ -1,10 +1,28 @@
 "use strict";
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+}();
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _defineProperty(obj, key, value) {
+    if (key in obj) {
+        Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });
+    } else {
+        obj[key] = value;
+    }return obj;
+}
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError("Cannot call a class as a function");
+    }
+}
 
 function convertToFixed(inputnum) {
     var mynum = inputnum.toPrecision(16); //adds zeros for demonstration purposes 
@@ -22,25 +40,26 @@ Array.prototype.uniqueMerge = function (a) {
     return this.concat(nonDuplicates);
 };
 
-
-var ArrayValue = function(){
+var ArrayValue = function () {
     function ArrayValue(arr) {
         _classCallCheck(this, ArrayValue);
         this.arr = arr;
         return this;
     }
 
-     _createClass(ArrayValue, [{
+    _createClass(ArrayValue, [{
         key: "sumSingleIteration",
-        value: function sumSingleIteration(arrayValue1){
-            if(arrayValue1){
-                return this.arr.map((currentValue, index) => currentValue + arrayValue1.arr[index]);
-            }else{
+        value: function sumSingleIteration(arrayValue1) {
+            if (arrayValue1) {
+                return this.arr.map(function (currentValue, index) {
+                    return currentValue + arrayValue1.arr[index];
+                });
+            } else {
                 return this.arr;
             }
         }
     }]);
-     return ArrayValue;
+    return ArrayValue;
 }();
 
 var PieChart = function () {
@@ -145,17 +164,17 @@ var AreaChart = function () {
         key: "draw",
         value: function draw() {
             var ctx = this.genCanvas();
-                
-            if(this.options.type == "AreaChartTemplate3"){             
-                let areaChartTemplate3 = new AreaChartTemplate3(this);
+
+            if (this.options.type == "AreaChartTemplate3") {
+                var areaChartTemplate3 = new AreaChartTemplate3(this);
                 areaChartTemplate3.draw(ctx);
-            }else if(this.options.type == "AreaChartTemplate2"){
-                let areaChartTemplate2 = new AreaChartTemplate2(this);
+            } else if (this.options.type == "AreaChartTemplate2") {
+                var areaChartTemplate2 = new AreaChartTemplate2(this);
                 areaChartTemplate2.draw(ctx);
-            }else{
-                let areaChartTemplate1 = new AreaChartTemplate1(this);
+            } else {
+                var areaChartTemplate1 = new AreaChartTemplate1(this);
                 areaChartTemplate1.draw(ctx);
-            }          
+            }
         }
     }, {
         key: "genCanvas",
@@ -189,7 +208,7 @@ var AreaChartTemplate1 = function () {
 
     _createClass(AreaChartTemplate1, [{
         key: "draw",
-        value: function draw(ctx) {                
+        value: function draw(ctx) {
             this.drawGrid(ctx);
             this.drawAreaTemplate1(ctx);
             this.seriesName(ctx);
@@ -244,7 +263,6 @@ var AreaChartTemplate1 = function () {
             var minY = this.minY();
             var maxX = minX + this.chart.w;
             var maxY = minY + this.chart.h;
-            
 
             var dataGrids = [];
             var dataTexts = [];
@@ -268,7 +286,7 @@ var AreaChartTemplate1 = function () {
                 var point = new Point(minX - 16, y);
                 GenerateText(dataTexts, "text" + y, text, point, "Helvetica", 12, "black", "end");
                 i++;
-                y+= stepHeightLeft;
+                y += stepHeightLeft;
             }
 
             y = minY;
@@ -338,12 +356,12 @@ var AreaChartTemplate1 = function () {
             // 
             var numCategory = this.numCategory();
 
-            let avgWidth;
-            
-            if(this.options.dataTable.display){
-              avgWidth = this.avgWidth();
-            }else{
-              avgWidth = this.chart.w / (this.numCategory() - 1);
+            var avgWidth = void 0;
+
+            if (this.options.dataTable.display) {
+                avgWidth = this.avgWidth();
+            } else {
+                avgWidth = this.chart.w / (this.numCategory() - 1);
             }
 
             if (primaryMajorVertical && !primaryMinorVertical) {
@@ -405,68 +423,68 @@ var AreaChartTemplate1 = function () {
     }, {
         key: "drawPoint",
         value: function drawPoint(ctx, points, color) {
-          ctx.beginPath();
-          ctx.fillStyle = color;
-          ctx.moveTo(points[0][0], points[0][1]);
-          for (var i = 1; i < points.length; i++) {
-            ctx.lineTo(points[i][0], points[i][1], color);
-          }
-          ctx.lineTo(points[points.length - 1][0], this.chart.h + this.chart.y);
-          ctx.lineTo(points[0][0], this.chart.h + this.chart.y);
-          ctx.lineTo(points[0][0], points[0][1]);
-          ctx.fill();
+            ctx.beginPath();
+            ctx.fillStyle = color;
+            ctx.moveTo(points[0][0], points[0][1]);
+            for (var i = 1; i < points.length; i++) {
+                ctx.lineTo(points[i][0], points[i][1], color);
+            }
+            ctx.lineTo(points[points.length - 1][0], this.chart.h + this.chart.y);
+            ctx.lineTo(points[0][0], this.chart.h + this.chart.y);
+            ctx.lineTo(points[0][0], points[0][1]);
+            ctx.fill();
         }
     }, {
         key: "drawAreaTemplate1",
         value: function drawAreaTemplate1(ctx) {
-            let arrOptionAxis = this.arrOptionAxis();
-            let seriAcording = (arrOptionAxis[0]).concat(arrOptionAxis[1]);
-            let xAcordingCategory = this.xAcordingCategory();
-                
-            for(let m=0; m < this.options.seriesOption.length; m++){
-                let point = [];
-                let areaPoints = [];
-                let isSecondary = false;
-                let index = seriAcording[m];
-                let val = this.getDataAcordingIndexSeri(index);
-                for(let i=0; i < this.data.length; i++){
+            var arrOptionAxis = this.arrOptionAxis();
+            var seriAcording = arrOptionAxis[0].concat(arrOptionAxis[1]);
+            var xAcordingCategory = this.xAcordingCategory();
+
+            for (var m = 0; m < this.options.seriesOption.length; m++) {
+                var point = [];
+                var areaPoints = [];
+                var _isSecondary = false;
+                var index = seriAcording[m];
+                var val = this.getDataAcordingIndexSeri(index);
+                for (var i = 0; i < this.data.length; i++) {
                     point = [];
                     point.push(xAcordingCategory[i]);
-                    if(this.seriesOption[index].seriOption == 2){
-                        isSecondary = true;
+                    if (this.seriesOption[index].seriOption == 2) {
+                        _isSecondary = true;
                     }
-                    point.push(this.cacl_y(val[i], isSecondary));
+                    point.push(this.cacl_y(val[i], _isSecondary));
                     areaPoints.push(point);
                 }
 
                 this.drawPoint(ctx, areaPoints, this.seriesOption[index].color);
-                ctx.textBaseline="bottom"; 
-                ctx.textAlign="center"; 
+                ctx.textBaseline = "bottom";
+                ctx.textAlign = "center";
                 ctx.font = "14px Arial";
                 ctx.fillStyle = "black";
-                if(m==0){
-                    for(let j=0; j < val.length; j++){
+                if (m == 0) {
+                    for (var j = 0; j < val.length; j++) {
                         ctx.fillText(this.options.data[j].date, xAcordingCategory[j], this.cacl_y(0, true) + 20);
                     }
                 }
             }
-            
+
             ctx.save();
             ctx.fillStyle = "black";
-            ctx.textBaseline="middle"; 
-            ctx.textAlign="center"; 
+            ctx.textBaseline = "middle";
+            ctx.textAlign = "center";
             ctx.font = "14px Arial";
-          
-            for(let j=0; j < this.options.seriesOption.length; j++){
-                if(!this.seriesOption[j].dataLable) break;
-                for(let i=0; i < this.data.length; i++){
-                    let index = seriAcording[j];
-                    let val = this.getDataAcordingIndexSeri(j);
-                    let isSecondary = false;
-                    if(this.seriesOption[j].seriOption == 2){
-                        isSecondary= true;
+
+            for (var _j21 = 0; _j21 < this.options.seriesOption.length; _j21++) {
+                if (!this.seriesOption[_j21].dataLable) break;
+                for (var _i = 0; _i < this.data.length; _i++) {
+                    var _index = seriAcording[_j21];
+                    var _val = this.getDataAcordingIndexSeri(_j21);
+                    var _isSecondary2 = false;
+                    if (this.seriesOption[_j21].seriOption == 2) {
+                        _isSecondary2 = true;
                     }
-                    ctx.fillText(val[i],xAcordingCategory[i],this.cacl_y(val[i]/2 , isSecondary));          
+                    ctx.fillText(_val[_i], xAcordingCategory[_i], this.cacl_y(_val[_i] / 2, _isSecondary2));
                 }
             }
         }
@@ -510,31 +528,31 @@ var AreaChartTemplate1 = function () {
             }
             return points;
         }
-    },{
+    }, {
         key: "xAcordingCategory",
-        value: function xAcordingCategory(){
-          var xAcordingCategory = [];
-          var numCategory = this.numCategory();
-          var numSeri = this.numSeri();
-          var minX = this.minX();
+        value: function xAcordingCategory() {
+            var xAcordingCategory = [];
+            var numCategory = this.numCategory();
+            var numSeri = this.numSeri();
+            var minX = this.minX();
 
-          // let secondAxis = this.chart.secondAxis;
-          var margin = 0;
-          
-          let x;
-          for (var i = 0; i < numCategory; i++) {
-            if(!this.options.dataTable.display){
-              let avgWidth = this.chart.w / (this.numCategory() - 1);
-              margin = i * avgWidth;
-              x = minX + margin;
-            }else{
-              let avgWidth = this.avgWidth();
-              margin = avgWidth / 2 + i * avgWidth;
-              x = minX + margin;
+            // let secondAxis = this.chart.secondAxis;
+            var margin = 0;
+
+            var x = void 0;
+            for (var i = 0; i < numCategory; i++) {
+                if (!this.options.dataTable.display) {
+                    var avgWidth = this.chart.w / (this.numCategory() - 1);
+                    margin = i * avgWidth;
+                    x = minX + margin;
+                } else {
+                    var _avgWidth = this.avgWidth();
+                    margin = _avgWidth / 2 + i * _avgWidth;
+                    x = minX + margin;
+                }
+                xAcordingCategory.push(x);
             }
-            xAcordingCategory.push(x);
-          }
-          return xAcordingCategory;
+            return xAcordingCategory;
         }
     }, {
         key: "arrOptionAxis",
@@ -557,28 +575,28 @@ var AreaChartTemplate1 = function () {
     }, {
         key: "seriesName",
         value: function seriesName(ctx) {
-            let arrOptionAxis = this.arrOptionAxis();
-            let seriAcording = (arrOptionAxis[0]).concat(arrOptionAxis[1]);
+            var arrOptionAxis = this.arrOptionAxis();
+            var seriAcording = arrOptionAxis[0].concat(arrOptionAxis[1]);
 
-            for(let i = 0; i <  this.options.seriesOption.length; i++){
-                let index = seriAcording[i];
-                if(this.options.seriesOption[index].legend){
-                    let point3 = new Point(this.options.seriesOption[index].legend.x, this.cacl_y(0, true) + 60);
-                    let rect = new Rect(1, point3, 6, 6, this.options.seriesOption[index].color, true);
+            for (var i = 0; i < this.options.seriesOption.length; i++) {
+                var index = seriAcording[i];
+                if (this.options.seriesOption[index].legend) {
+                    var point3 = new Point(this.options.seriesOption[index].legend.x, this.cacl_y(0, true) + 60);
+                    var rect = new Rect(1, point3, 6, 6, this.options.seriesOption[index].color, true);
                     rect.draw(ctx);
-                    ctx.textBaseline="middle";  
+                    ctx.textBaseline = "middle";
                     // let point4 = new Point(10, this.cacl_y(0, true) + 60 + 3 );
-                    let point4 = new Point(this.options.seriesOption[index].legend.x + 10, 
-                        this.options.seriesOption[index].legend.y + 6/2);
-                    let text = new Text(1, this.options.seriesOption[index].name, point4, 
-                        this.options.seriesOption[index].legend.fontsize, 16, "black");
+                    var point4 = new Point(this.options.seriesOption[index].legend.x + 10, this.options.seriesOption[index].legend.y + 6 / 2);
+                    var text = new Text(1, this.options.seriesOption[index].name, point4, this.options.seriesOption[index].legend.fontsize, 16, "black");
                     text.draw(ctx);
-                } 
+                }
             }
         }
     }, {
         key: "getDataAcordingIndexSeri",
-        value: function getDataAcordingIndexSeri(index=0) {
+        value: function getDataAcordingIndexSeri() {
+            var index = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+
             var dataSeri = [];
             for (var i = 0; i < this.options["data"].length; i++) {
                 dataSeri.push(this.options["data"][i]["series"][index].value);
@@ -621,7 +639,7 @@ var AreaChartTemplate1 = function () {
             var m = 0;
             var a = [1.0, 2.0, 5.0, 10.0];
             var x = sMax / 9.52;
-            var z = Math.floor(Math.log(x)/Math.log(10));
+            var z = Math.floor(Math.log(x) / Math.log(10));
             for (var i = 0; i < a.length; i++) {
                 a[i] = a[i] * Math.pow(10, z);
                 if (x <= a[i]) {
@@ -706,16 +724,15 @@ var AreaChartTemplate2 = function () {
 
     _createClass(AreaChartTemplate2, [{
         key: "draw",
-        value: function draw(ctx) {                
+        value: function draw(ctx) {
             this.drawGrid(ctx);
             this.seriesName(ctx);
             this.displayLabelPrimaryHorizontal(ctx);
             this.drawAreaTemplate(ctx);
-            
+
             /*var a = xAcordingCategory;
             var b = yCalcAcordingTemplate[1][0];
-
-            var c = a.map(function(e, i) {
+             var c = a.map(function(e, i) {
               return [e, b[i]];
             });
             console.log(c);*/
@@ -724,22 +741,24 @@ var AreaChartTemplate2 = function () {
         key: "yCalcAcordingTemplate",
         value: function yCalcAcordingTemplate(ctx) {
             /* Liet ke cac Seri co option PrimaryAxis */
-            let index, arr, arrayValue ;
-            let sum;
-            let dataSeri = [];
-            let valToDraw= [];
-            let color;
+            var index = void 0,
+                arr = void 0,
+                arrayValue = void 0;
+            var sum = void 0;
+            var dataSeri = [];
+            var valToDraw = [];
+            var color = void 0;
             /* Co the toi uu, rut gon bot doan nay, gop PrimaryAxis va SecondaryAxis vao */
-            for(let j=0; j < 2; j++){
-                index= 0, arr=[], arrayValue =[];
+            for (var j = 0; j < 2; j++) {
+                index = 0, arr = [], arrayValue = [];
                 dataSeri = [];
-                sum=[];
-                for(let i =0; i < this.arrOptionAxis()[j].length; i++){
+                sum = [];
+                for (var i = 0; i < this.arrOptionAxis()[j].length; i++) {
                     index = this.arrOptionAxis()[j][i];
                     arr = this.getDataAcordingIndexSeri(index);
-                    if(i == 0){
+                    if (i == 0) {
                         sum = arr;
-                    }else{
+                    } else {
                         arrayValue = new ArrayValue(arr);
                         sum = new ArrayValue(sum);
                         sum = sum.sumSingleIteration(arrayValue);
@@ -761,13 +780,13 @@ var AreaChartTemplate2 = function () {
                 ctx.lineTo(points[i][0], points[i][1], color);
             }
 
-            if(points2){
-                ctx.lineTo(points[points.length - 1][0], points2[points2.length -1][1]);
-                for (var j = points2.length-1; j >= 0; j--) {
+            if (points2) {
+                ctx.lineTo(points[points.length - 1][0], points2[points2.length - 1][1]);
+                for (var j = points2.length - 1; j >= 0; j--) {
                     ctx.lineTo(points2[j][0], points2[j][1], color);
                 }
                 ctx.lineTo(points2[0][0], points[0][1]);
-            }else{
+            } else {
                 ctx.lineTo(points[points.length - 1][0], this.chart.h + this.chart.y);
                 ctx.lineTo(points[0][0], this.chart.h + this.chart.y);
                 ctx.lineTo(points[0][0], points[0][1]);
@@ -780,58 +799,67 @@ var AreaChartTemplate2 = function () {
     }, {
         key: "drawAreaTemplate",
         value: function drawAreaTemplate(ctx) {
-            let xAcordingCategory = this.xAcordingCategory();
-            let yCalcAcordingTemplate = this.yCalcAcordingTemplate(ctx);
-           /* console.log(xAcordingCategory);
-            console.log(yCalcAcordingTemplate);*/
+            var _this = this;
 
-            let arr = [];
-            let points = [], points2 = [], arr1 = [], currentSeri, color;
-            let isSecondary = false;
-            for(let j = 0; j < 2; j++){
-                if(j == 1){
+            var xAcordingCategory = this.xAcordingCategory();
+            var yCalcAcordingTemplate = this.yCalcAcordingTemplate(ctx);
+            /* console.log(xAcordingCategory);
+             console.log(yCalcAcordingTemplate);*/
+
+            var arr = [];
+            var points = [],
+                points2 = [],
+                arr1 = [],
+                currentSeri = void 0,
+                color = void 0;
+            var isSecondary = false;
+            for (var j = 0; j < 2; j++) {
+                if (j == 1) {
                     isSecondary = true;
                 }
-                for(let i= 0; i < yCalcAcordingTemplate[j].length ; i++){
+                for (var i = 0; i < yCalcAcordingTemplate[j].length; i++) {
                     currentSeri = this.indexToDraw()[j][i];
                     color = this.seriesOption[currentSeri].color;
                     arr = yCalcAcordingTemplate[j][i];
-                    arr = arr.map(x => this.cacl_y(x, isSecondary));
-                    points = xAcordingCategory.map(function(e, i) {
-                      return [e, arr[i]];
+                    arr = arr.map(function (x) {
+                        return _this.cacl_y(x, isSecondary);
                     });
-                    if(i == yCalcAcordingTemplate[j].length - 1){
+                    points = xAcordingCategory.map(function (e, i) {
+                        return [e, arr[i]];
+                    });
+                    if (i == yCalcAcordingTemplate[j].length - 1) {
                         this.drawArea(ctx, color, points);
-                    }else{
-                        arr1= yCalcAcordingTemplate[j][i+1];
-                        arr1 = arr1.map(x => this.cacl_y(x, isSecondary));
-                        points2 = xAcordingCategory.map(function(e, i) {
-                          return [e, arr1[i]];
+                    } else {
+                        arr1 = yCalcAcordingTemplate[j][i + 1];
+                        arr1 = arr1.map(function (x) {
+                            return _this.cacl_y(x, isSecondary);
+                        });
+                        points2 = xAcordingCategory.map(function (e, i) {
+                            return [e, arr1[i]];
                         });
                         this.drawArea(ctx, color, points, points2);
                     }
                 }
             }
-
         }
 
         /* Seri thu nao co option Primary Axis, Secondary Axis */
 
     }, {
         key: "displayLabelPrimaryHorizontal",
-        value: function displayLabelPrimaryHorizontal(ctx){
-            ctx.textBaseline="bottom"; 
-            ctx.textAlign="center"; 
+        value: function displayLabelPrimaryHorizontal(ctx) {
+            ctx.textBaseline = "bottom";
+            ctx.textAlign = "center";
             ctx.font = "15px Arial";
             ctx.fillStyle = "black";
-            let xAcordingCategory = this.xAcordingCategory();
-            for(let j=0; j < 5; j++){
+            var xAcordingCategory = this.xAcordingCategory();
+            for (var j = 0; j < 5; j++) {
                 ctx.fillText(this.options.data[j].date, xAcordingCategory[j], this.cacl_y(0, true) + 34);
             }
-           /* var _point20 = new Point(0, this.cacl_y(0, true) + 34);
-            var _point19 = new Point(300, this.cacl_y(0, true) + 34);
-            var line = new Line(_point19, _point20, "#d9d9d9");
-            line.draw(ctx);*/
+            /* var _point20 = new Point(0, this.cacl_y(0, true) + 34);
+             var _point19 = new Point(300, this.cacl_y(0, true) + 34);
+             var line = new Line(_point19, _point20, "#d9d9d9");
+             line.draw(ctx);*/
         }
     }, {
         key: "minX",
@@ -883,11 +911,10 @@ var AreaChartTemplate2 = function () {
             var minY = this.minY();
             var maxX = minX + this.chart.w;
             var maxY = minY + this.chart.h;
-            
 
             var dataGrids = [];
             var dataTexts = [];
-            
+
             var stepHeightLeft = this.stepHeight();
             var stepHeightRight = this.stepHeight(true);
             var maxValAxisLeft = this.maxValAxis();
@@ -978,12 +1005,12 @@ var AreaChartTemplate2 = function () {
             // 
             var numCategory = this.numCategory();
 
-            let avgWidth;
-            
-            if(this.options.dataTable.display){
-              avgWidth = this.avgWidth();
-            }else{
-              avgWidth = this.chart.w / (this.numCategory() - 1);
+            var avgWidth = void 0;
+
+            if (this.options.dataTable.display) {
+                avgWidth = this.avgWidth();
+            } else {
+                avgWidth = this.chart.w / (this.numCategory() - 1);
             }
 
             if (primaryMajorVertical && !primaryMinorVertical) {
@@ -1044,29 +1071,29 @@ var AreaChartTemplate2 = function () {
         }
     }, {
         key: "xAcordingCategory",
-        value: function xAcordingCategory(){
-          var xAcordingCategory = [];
-          var numCategory = this.numCategory();
-          var numSeri = this.numSeri();
-          var minX = this.minX();
+        value: function xAcordingCategory() {
+            var xAcordingCategory = [];
+            var numCategory = this.numCategory();
+            var numSeri = this.numSeri();
+            var minX = this.minX();
 
-          // let secondAxis = this.chart.secondAxis;
-          var margin = 0;
-          
-          let x;
-          for (var i = 0; i < numCategory; i++) {
-            if(!this.options.dataTable.display){
-              let avgWidth = this.chart.w / (this.numCategory() - 1);
-              margin = i * avgWidth;
-              x = minX + margin;
-            }else{
-              let avgWidth = this.avgWidth();
-              margin = avgWidth / 2 + i * avgWidth;
-              x = minX + margin;
+            // let secondAxis = this.chart.secondAxis;
+            var margin = 0;
+
+            var x = void 0;
+            for (var i = 0; i < numCategory; i++) {
+                if (!this.options.dataTable.display) {
+                    var avgWidth = this.chart.w / (this.numCategory() - 1);
+                    margin = i * avgWidth;
+                    x = minX + margin;
+                } else {
+                    var _avgWidth2 = this.avgWidth();
+                    margin = _avgWidth2 / 2 + i * _avgWidth2;
+                    x = minX + margin;
+                }
+                xAcordingCategory.push(x);
             }
-            xAcordingCategory.push(x);
-          }
-          return xAcordingCategory;
+            return xAcordingCategory;
         }
     }, {
         key: "arrOptionAxis",
@@ -1088,9 +1115,9 @@ var AreaChartTemplate2 = function () {
     }, {
         // Thu tu ve hinh cac series
         key: "indexToDraw",
-        value: function indexToDraw(){
-            let arrOptionAxis = this.arrOptionAxis();
-            let arrIndexToDraw  = [];
+        value: function indexToDraw() {
+            var arrOptionAxis = this.arrOptionAxis();
+            var arrIndexToDraw = [];
             arrIndexToDraw.push(arrOptionAxis[0].reverse());
             arrIndexToDraw.push(arrOptionAxis[1].reverse());
             return arrIndexToDraw;
@@ -1098,35 +1125,35 @@ var AreaChartTemplate2 = function () {
     }, {
         // Thu tu thuc hien cac series de ve series name
         key: "indexSeriNumber",
-        value: function indexSeriNumber(){
-            let arrOptionAxis = this.arrOptionAxis();
-            let seriAcording = (arrOptionAxis[0]).concat(arrOptionAxis[1]);
+        value: function indexSeriNumber() {
+            var arrOptionAxis = this.arrOptionAxis();
+            var seriAcording = arrOptionAxis[0].concat(arrOptionAxis[1]);
             return seriAcording;
         }
-    },{
+    }, {
         key: "seriesName",
         value: function seriesName(ctx) {
-            let seriAcording = this.indexSeriNumber();
+            var seriAcording = this.indexSeriNumber();
 
-            for(let i = 0; i <  this.options.seriesOption.length; i++){
-                let index = seriAcording[i];
-                if(this.options.seriesOption[index].legend){
-                    let point3 = new Point(this.options.seriesOption[index].legend.x, this.cacl_y(0, true) + 60);
-                    let rect = new Rect(1, point3, 6, 6, this.options.seriesOption[index].color, true);
+            for (var i = 0; i < this.options.seriesOption.length; i++) {
+                var index = seriAcording[i];
+                if (this.options.seriesOption[index].legend) {
+                    var point3 = new Point(this.options.seriesOption[index].legend.x, this.cacl_y(0, true) + 60);
+                    var rect = new Rect(1, point3, 6, 6, this.options.seriesOption[index].color, true);
                     rect.draw(ctx);
-                    ctx.textBaseline="middle";  
+                    ctx.textBaseline = "middle";
                     // let point4 = new Point(10, this.cacl_y(0, true) + 60 + 3 );
-                    let point4 = new Point(this.options.seriesOption[index].legend.x + 10, 
-                        this.options.seriesOption[index].legend.y + 6/2);
-                    let text = new Text(1, this.options.seriesOption[index].name, point4, 
-                        this.options.seriesOption[index].legend.fontsize, 16, "black");
+                    var point4 = new Point(this.options.seriesOption[index].legend.x + 10, this.options.seriesOption[index].legend.y + 6 / 2);
+                    var text = new Text(1, this.options.seriesOption[index].name, point4, this.options.seriesOption[index].legend.fontsize, 16, "black");
                     text.draw(ctx);
-                } 
+                }
             }
         }
     }, {
         key: "getDataAcordingIndexSeri",
-        value: function getDataAcordingIndexSeri(index=0) {
+        value: function getDataAcordingIndexSeri() {
+            var index = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+
             var dataSeri = [];
             for (var i = 0; i < this.options["data"].length; i++) {
                 dataSeri.push(this.options["data"][i]["series"][index].value);
@@ -1176,7 +1203,7 @@ var AreaChartTemplate2 = function () {
             var m = 0;
             var a = [1.0, 2.0, 5.0, 10.0];
             var x = sMax / 9.52;
-            var z = Math.floor(Math.log(x)/Math.log(10));
+            var z = Math.floor(Math.log(x) / Math.log(10));
             for (var i = 0; i < a.length; i++) {
                 a[i] = a[i] * Math.pow(10, z);
                 if (x <= a[i]) {
@@ -1241,33 +1268,34 @@ var AreaChartTemplate3 = function () {
 
     _createClass(AreaChartTemplate3, [{
         key: "draw",
-        value: function draw(ctx) {                
+        value: function draw(ctx) {
             this.drawGrid(ctx);
             this.seriesName(ctx);
             this.displayLabelPrimaryHorizontal(ctx);
             this.drawAreaTemplate(ctx);
-           
         }
     }, {
         key: "yCalcAcordingTemplate",
         value: function yCalcAcordingTemplate(ctx) {
             /* Liet ke cac Seri co option PrimaryAxis */
-            let index, arr, arrayValue ;
-            let sum;
-            let dataSeri = [];
-            let valToDraw= [];
-            let color;
+            var index = void 0,
+                arr = void 0,
+                arrayValue = void 0;
+            var sum = void 0;
+            var dataSeri = [];
+            var valToDraw = [];
+            var color = void 0;
             /* Co the toi uu, rut gon bot doan nay, gop PrimaryAxis va SecondaryAxis vao */
-            for(let j=0; j < 2; j++){
-                index= 0, arr=[], arrayValue =[];
+            for (var j = 0; j < 2; j++) {
+                index = 0, arr = [], arrayValue = [];
                 dataSeri = [];
-                sum=[];
-                for(let i =0; i < this.arrOptionAxis()[j].length; i++){
+                sum = [];
+                for (var i = 0; i < this.arrOptionAxis()[j].length; i++) {
                     index = this.arrOptionAxis()[j][i];
                     arr = this.getDataAcordingIndexSeri(index);
-                    if(i == 0){
+                    if (i == 0) {
                         sum = arr;
-                    }else{
+                    } else {
                         arrayValue = new ArrayValue(arr);
                         sum = new ArrayValue(sum);
                         sum = sum.sumSingleIteration(arrayValue);
@@ -1290,13 +1318,13 @@ var AreaChartTemplate3 = function () {
                 ctx.lineTo(points[i][0], points[i][1], color);
             }
 
-            if(points2){
-                ctx.lineTo(points[points.length - 1][0], points2[points2.length -1][1]);
-                for (var j = points2.length-1; j >= 0; j--) {
+            if (points2) {
+                ctx.lineTo(points[points.length - 1][0], points2[points2.length - 1][1]);
+                for (var j = points2.length - 1; j >= 0; j--) {
                     ctx.lineTo(points2[j][0], points2[j][1], color);
                 }
                 ctx.lineTo(points2[0][0], points[0][1]);
-            }else{
+            } else {
                 ctx.lineTo(points[points.length - 1][0], this.chart.h + this.chart.y);
                 ctx.lineTo(points[0][0], this.chart.h + this.chart.y);
                 ctx.lineTo(points[0][0], points[0][1]);
@@ -1309,58 +1337,72 @@ var AreaChartTemplate3 = function () {
     }, {
         key: "drawAreaTemplate",
         value: function drawAreaTemplate(ctx) {
-            let xAcordingCategory = this.xAcordingCategory();
-            let yCalcAcordingTemplate = this.yCalcAcordingTemplate(ctx);
+            var _this2 = this;
+
+            var xAcordingCategory = this.xAcordingCategory();
+            var yCalcAcordingTemplate = this.yCalcAcordingTemplate(ctx);
             console.log(xAcordingCategory);
             console.log(yCalcAcordingTemplate);
-            
-            let arr = [];
-            let points = [], points2 = [], arr1 = [], currentSeri, color;
-            let isSecondary = false;
-            for(let j = 0; j < 2; j++){
+
+            var arr = [];
+            var points = [],
+                points2 = [],
+                arr1 = [],
+                currentSeri = void 0,
+                color = void 0;
+            var isSecondary = false;
+
+            var _loop = function _loop(j) {
                 arr = [];
                 points = [], points2 = [], arr1 = [];
-                if(j == 1){
+                if (j == 1) {
                     isSecondary = true;
                 }
-                for(let i= 0; i < yCalcAcordingTemplate[j].length ; i++){
-                    currentSeri = this.indexToDraw()[j][i];
+                for (var i = 0; i < yCalcAcordingTemplate[j].length; i++) {
+                    currentSeri = _this2.indexToDraw()[j][i];
                     console.log(currentSeri);
-                    color = this.seriesOption[currentSeri].color;
+                    color = _this2.seriesOption[currentSeri].color;
                     arr = yCalcAcordingTemplate[j][i];
                     // arr = arr.map(x => this.cacl_y(100* x/ yCalcAcordingTemplate[j][0][i], isSecondary));
-                    arr = arr.map((x, index) => this.cacl_y(100* x/ yCalcAcordingTemplate[j][0][index], isSecondary));
-                    // arr = arr.map((x, index) => 100* x/ yCalcAcordingTemplate[j][0][index], isSecondary);
-                    points = xAcordingCategory.map(function(e, i) {
-                      return [e, arr[i]];
+                    arr = arr.map(function (x, index) {
+                        return _this2.cacl_y(100 * x / yCalcAcordingTemplate[j][0][index], isSecondary);
                     });
-                    if(i == yCalcAcordingTemplate[j].length - 1){
-                        this.drawArea(ctx, color, points);
-                    }else{
-                        arr1= yCalcAcordingTemplate[j][i+1];
-                        arr1 = arr1.map((x, index) => this.cacl_y(100* x/ yCalcAcordingTemplate[j][0][index], isSecondary));
-                        // arr1 = arr1.map((x, index) =>  100* x/ yCalcAcordingTemplate[j][0][index], isSecondary);
-                        points2 = xAcordingCategory.map(function(e, i) {
-                          return [e, arr1[i]];
+                    // arr = arr.map((x, index) => 100* x/ yCalcAcordingTemplate[j][0][index], isSecondary);
+                    points = xAcordingCategory.map(function (e, i) {
+                        return [e, arr[i]];
+                    });
+                    if (i == yCalcAcordingTemplate[j].length - 1) {
+                        _this2.drawArea(ctx, color, points);
+                    } else {
+                        arr1 = yCalcAcordingTemplate[j][i + 1];
+                        arr1 = arr1.map(function (x, index) {
+                            return _this2.cacl_y(100 * x / yCalcAcordingTemplate[j][0][index], isSecondary);
                         });
-                        this.drawArea(ctx, color, points, points2);
+                        // arr1 = arr1.map((x, index) =>  100* x/ yCalcAcordingTemplate[j][0][index], isSecondary);
+                        points2 = xAcordingCategory.map(function (e, i) {
+                            return [e, arr1[i]];
+                        });
+                        _this2.drawArea(ctx, color, points, points2);
                     }
                 }
-            }
+            };
 
+            for (var j = 0; j < 2; j++) {
+                _loop(j);
+            }
         }
 
         /* Seri thu nao co option Primary Axis, Secondary Axis */
 
     }, {
         key: "displayLabelPrimaryHorizontal",
-        value: function displayLabelPrimaryHorizontal(ctx){
-            ctx.textBaseline="bottom"; 
-            ctx.textAlign="center"; 
+        value: function displayLabelPrimaryHorizontal(ctx) {
+            ctx.textBaseline = "bottom";
+            ctx.textAlign = "center";
             ctx.font = "15px Arial";
             ctx.fillStyle = "black";
-            let xAcordingCategory = this.xAcordingCategory();
-            for(let j=0; j < 5; j++){
+            var xAcordingCategory = this.xAcordingCategory();
+            for (var j = 0; j < 5; j++) {
                 ctx.fillText(this.options.data[j].date, xAcordingCategory[j], this.cacl_y(0, true) + 34);
             }
             var _point20 = new Point(0, this.cacl_y(0, true) + 34);
@@ -1419,11 +1461,10 @@ var AreaChartTemplate3 = function () {
             var minY = this.minY();
             var maxX = minX + this.chart.w;
             var maxY = minY + this.chart.h;
-            
 
             var dataGrids = [];
             var dataTexts = [];
-            
+
             var stepHeightLeft = this.stepHeight();
             var stepHeightRight = this.stepHeight(true);
             var maxValAxisLeft = 100;
@@ -1514,12 +1555,12 @@ var AreaChartTemplate3 = function () {
             // 
             var numCategory = this.numCategory();
 
-            let avgWidth;
-            
-            if(this.options.dataTable.display){
-              avgWidth = this.avgWidth();
-            }else{
-              avgWidth = this.chart.w / (this.numCategory() - 1);
+            var avgWidth = void 0;
+
+            if (this.options.dataTable.display) {
+                avgWidth = this.avgWidth();
+            } else {
+                avgWidth = this.chart.w / (this.numCategory() - 1);
             }
 
             if (primaryMajorVertical && !primaryMinorVertical) {
@@ -1588,29 +1629,29 @@ var AreaChartTemplate3 = function () {
         }
     }, {
         key: "xAcordingCategory",
-        value: function xAcordingCategory(){
-          var xAcordingCategory = [];
-          var numCategory = this.numCategory();
-          var numSeri = this.numSeri();
-          var minX = this.minX();
+        value: function xAcordingCategory() {
+            var xAcordingCategory = [];
+            var numCategory = this.numCategory();
+            var numSeri = this.numSeri();
+            var minX = this.minX();
 
-          // let secondAxis = this.chart.secondAxis;
-          var margin = 0;
-          
-          let x;
-          for (var i = 0; i < numCategory; i++) {
-            if(!this.options.dataTable.display){
-              let avgWidth = this.chart.w / (this.numCategory() - 1);
-              margin = i * avgWidth;
-              x = minX + margin;
-            }else{
-              let avgWidth = this.avgWidth();
-              margin = avgWidth / 2 + i * avgWidth;
-              x = minX + margin;
+            // let secondAxis = this.chart.secondAxis;
+            var margin = 0;
+
+            var x = void 0;
+            for (var i = 0; i < numCategory; i++) {
+                if (!this.options.dataTable.display) {
+                    var avgWidth = this.chart.w / (this.numCategory() - 1);
+                    margin = i * avgWidth;
+                    x = minX + margin;
+                } else {
+                    var _avgWidth3 = this.avgWidth();
+                    margin = _avgWidth3 / 2 + i * _avgWidth3;
+                    x = minX + margin;
+                }
+                xAcordingCategory.push(x);
             }
-            xAcordingCategory.push(x);
-          }
-          return xAcordingCategory;
+            return xAcordingCategory;
         }
     }, {
         key: "arrOptionAxis",
@@ -1632,9 +1673,9 @@ var AreaChartTemplate3 = function () {
     }, {
         // Thu tu ve hinh cac series
         key: "indexToDraw",
-        value: function indexToDraw(){
-            let arrOptionAxis = this.arrOptionAxis();
-            let arrIndexToDraw  = [];
+        value: function indexToDraw() {
+            var arrOptionAxis = this.arrOptionAxis();
+            var arrIndexToDraw = [];
             arrIndexToDraw.push(arrOptionAxis[0].reverse());
             arrIndexToDraw.push(arrOptionAxis[1].reverse());
             return arrIndexToDraw;
@@ -1642,35 +1683,35 @@ var AreaChartTemplate3 = function () {
     }, {
         // Thu tu thuc hien cac series de ve series name
         key: "indexSeriNumber",
-        value: function indexSeriNumber(){
-            let arrOptionAxis = this.arrOptionAxis();
-            let seriAcording = (arrOptionAxis[0]).concat(arrOptionAxis[1]);
+        value: function indexSeriNumber() {
+            var arrOptionAxis = this.arrOptionAxis();
+            var seriAcording = arrOptionAxis[0].concat(arrOptionAxis[1]);
             return seriAcording;
         }
-    },{
+    }, {
         key: "seriesName",
         value: function seriesName(ctx) {
-            let seriAcording = this.indexSeriNumber();
+            var seriAcording = this.indexSeriNumber();
 
-            for(let i = 0; i <  this.options.seriesOption.length; i++){
-                let index = seriAcording[i];
-                if(this.options.seriesOption[index].legend){
-                    let point3 = new Point(this.options.seriesOption[index].legend.x, this.cacl_y(0, true) + 60);
-                    let rect = new Rect(1, point3, 6, 6, this.options.seriesOption[index].color, true);
+            for (var i = 0; i < this.options.seriesOption.length; i++) {
+                var index = seriAcording[i];
+                if (this.options.seriesOption[index].legend) {
+                    var point3 = new Point(this.options.seriesOption[index].legend.x, this.cacl_y(0, true) + 60);
+                    var rect = new Rect(1, point3, 6, 6, this.options.seriesOption[index].color, true);
                     rect.draw(ctx);
-                    ctx.textBaseline="middle";  
+                    ctx.textBaseline = "middle";
                     // let point4 = new Point(10, this.cacl_y(0, true) + 60 + 3 );
-                    let point4 = new Point(this.options.seriesOption[index].legend.x + 10, 
-                        this.options.seriesOption[index].legend.y + 6/2);
-                    let text = new Text(1, this.options.seriesOption[index].name, point4, 
-                        this.options.seriesOption[index].legend.fontsize, 16, "black");
+                    var point4 = new Point(this.options.seriesOption[index].legend.x + 10, this.options.seriesOption[index].legend.y + 6 / 2);
+                    var text = new Text(1, this.options.seriesOption[index].name, point4, this.options.seriesOption[index].legend.fontsize, 16, "black");
                     text.draw(ctx);
-                } 
+                }
             }
         }
     }, {
         key: "getDataAcordingIndexSeri",
-        value: function getDataAcordingIndexSeri(index=0) {
+        value: function getDataAcordingIndexSeri() {
+            var index = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+
             var dataSeri = [];
             for (var i = 0; i < this.options["data"].length; i++) {
                 dataSeri.push(this.options["data"][i]["series"][index].value);
@@ -1720,7 +1761,7 @@ var AreaChartTemplate3 = function () {
             var m = 0;
             var a = [1.0, 2.0, 5.0, 10.0];
             var x = sMax / 9.52;
-            var z = Math.floor(Math.log(x)/Math.log(10));
+            var z = Math.floor(Math.log(x) / Math.log(10));
             for (var i = 0; i < a.length; i++) {
                 a[i] = a[i] * Math.pow(10, z);
                 if (x <= a[i]) {
@@ -2059,8 +2100,7 @@ var Seri = function () {
 }();
 
 var Chart = function () {
-    function Chart(w_canvas, h_canvas, top_canvas, left_canvas, location_chart, w_chart, h_chart, gridOption, color, 
-        category_name, typeChart, data, seriOption) {
+    function Chart(w_canvas, h_canvas, top_canvas, left_canvas, location_chart, w_chart, h_chart, gridOption, color, category_name, typeChart, data, seriOption) {
         var displayDataTable = arguments.length > 13 && arguments[13] !== undefined ? arguments[13] : false;
         var location_legend = arguments.length > 14 && arguments[14] !== undefined ? arguments[14] : {};
         var w_legend = arguments.length > 15 && arguments[15] !== undefined ? arguments[15] : 0;
@@ -2489,7 +2529,7 @@ var Chart = function () {
             var m = 0;
             var a = [1.0, 2.0, 5.0, 10.0];
             var x = sMax / 9.52;
-            var z = Math.floor(Math.log(x,10));
+            var z = Math.floor(Math.log(x, 10));
             for (var i = 0; i < a.length; i++) {
                 a[i] = a[i] * Math.pow(10, z);
                 if (x <= a[i]) {
@@ -3372,7 +3412,7 @@ function CalculatorStep(sMax) {
     var m = 0;
     var a = [1.0, 2.0, 5.0, 10.0];
     var x = sMax / 9.52;
-    var z = Math.floor(Math.log(x)/Math.log(10));
+    var z = Math.floor(Math.log(x) / Math.log(10));
     for (var i = 0; i < a.length; i++) {
         a[i] = a[i] * Math.pow(10, z);
         if (x <= a[i]) {
@@ -3553,7 +3593,7 @@ window.onload = function () {
     // gapWidth, secondAxis, displayDataTable = false);
 
     // veBieuDo(1, optionsBieuDoCot);
-    
+
     var typeChart2 = "lineChart_Template5";
     var top_canvas2 = 1100;
     var left_canvas2 = 25;
@@ -3586,42 +3626,40 @@ window.onload = function () {
         "seriOption": seriOption
     }, "displayDataTable", true);
 
-    
     // veBieuDo(2, options);
 
-   /* var typeChart3 = "lineChart_Template1";
-    var top_canvas3 = 1600;
-    var left_canvas3 = 25;
-    var type_horizontal = true;
-    var type_outline = true;
-    var type_vertical = true;
-    var p3 = new Point(75, 43);
-    var location_chart2 = p3;
-    var displayDataTable = true;
-
-    var options1 = {
-        "w_canvas": 920,
-        "h_canvas": 427,
-        "top_canvas": top_canvas3,
-        "left_canvas": left_canvas2,
-        "location_chart":  location_chart2,
-        "w_chart":  821,
-        "h_chart": 300,
-        "gridOption": gridOption,
-        "color": color,
-        "category_name": category_name,
-        "location_legend": location_legend,
-        "w_legend": w_legend,
-        "h_legend": h_legend,
-        "displayDataTable": false,
-        "typeChart": typeChart2,
-        "data": data,
-        "dataTable": dataTable,
-        "seriOption": seriOption,
-        "displayDataTable": false
-    };
-    
-    veBieuDo(3, options1);*/
+    /* var typeChart3 = "lineChart_Template1";
+     var top_canvas3 = 1600;
+     var left_canvas3 = 25;
+     var type_horizontal = true;
+     var type_outline = true;
+     var type_vertical = true;
+     var p3 = new Point(75, 43);
+     var location_chart2 = p3;
+     var displayDataTable = true;
+      var options1 = {
+         "w_canvas": 920,
+         "h_canvas": 427,
+         "top_canvas": top_canvas3,
+         "left_canvas": left_canvas2,
+         "location_chart":  location_chart2,
+         "w_chart":  821,
+         "h_chart": 300,
+         "gridOption": gridOption,
+         "color": color,
+         "category_name": category_name,
+         "location_legend": location_legend,
+         "w_legend": w_legend,
+         "h_legend": h_legend,
+         "displayDataTable": false,
+         "typeChart": typeChart2,
+         "data": data,
+         "dataTable": dataTable,
+         "seriOption": seriOption,
+         "displayDataTable": false
+     };
+     
+     veBieuDo(3, options1);*/
 
     /*var myVinyls = {
         "Classical music": 8.2,
@@ -3686,7 +3724,7 @@ window.onload = function () {
             }]
         },
         "dataTable": {
-          "display": true
+            "display": true
         },
         "gridLine": {
             "primaryMajorHorizontal": true,
@@ -3706,36 +3744,36 @@ window.onload = function () {
             "name": "Series 1",
             "seriOption": 1,
             "color": "#5b9bd5",
-            "dataLable":true,
+            "dataLable": true,
             "legend": {
-                "x":140,
-                "y":310,
+                "x": 140,
+                "y": 310,
                 "font": "Arial",
-                "size":20
+                "size": 20
             }
         }, {
             "name": "Series 2",
             "seriOption": 2,
             "color": "#ed7d31",
-            "dataLable":true,
+            "dataLable": true,
             "legend": {
-                "x":240,
-                "y":310,
+                "x": 240,
+                "y": 310,
                 "font": "Arial",
-                "size":20
+                "size": 20
             }
         }, {
             "name": "Series 3",
             "seriOption": 2,
             "color": "#a5a5a5",
-            "dataLable":false,
+            "dataLable": false,
             "legend": {
-                "x":340,
-                "y":310,
-                "w":30,
-                "h":20,
+                "x": 340,
+                "y": 310,
+                "w": 30,
+                "h": 20,
                 "font": "Arial",
-                "size":20
+                "size": 20
             }
         }],
         "data": [{
@@ -3746,7 +3784,7 @@ window.onload = function () {
             }, {
                 "name": "seri 2",
                 "value": 12
-            },{
+            }, {
                 "name": "seri 3",
                 "value": 3
             }]
@@ -3758,7 +3796,7 @@ window.onload = function () {
             }, {
                 "name": "seri 2",
                 "value": 12
-            },{
+            }, {
                 "name": "seri 3",
                 "value": 3
             }]
@@ -3770,7 +3808,7 @@ window.onload = function () {
             }, {
                 "name": "seri 2",
                 "value": 12
-            },{
+            }, {
                 "name": "seri 3",
                 "value": 7
             }]
@@ -3783,7 +3821,7 @@ window.onload = function () {
             }, {
                 "name": "seri 2",
                 "value": 21
-            },{
+            }, {
                 "name": "seri 3",
                 "value": 9
             }]
@@ -3796,7 +3834,7 @@ window.onload = function () {
             }, {
                 "name": "seri 2",
                 "value": 28
-            },{
+            }, {
                 "name": "seri 3",
                 "value": 11
             }]
@@ -3814,8 +3852,7 @@ window.onload = function () {
             "h": 187,
             "x": 54,
             "y": 63
-        }
-        ]
+        }]
     });
 
     areaChart.draw();
