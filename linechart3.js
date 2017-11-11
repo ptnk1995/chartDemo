@@ -31,6 +31,7 @@ function convertToFixed(inputnum) {
     return final;
 }
 
+
 Array.prototype.uniqueMerge = function (a) {
     for (var nonDuplicates = [], i = 0, l = a.length; i < l; ++i) {
         if (this.indexOf(a[i]) === -1) {
@@ -2100,7 +2101,8 @@ var Seri = function () {
 }();
 
 var Chart = function () {
-    function Chart(w_canvas, h_canvas, top_canvas, left_canvas, location_chart, w_chart, h_chart, gridOption, color, category_name, typeChart, data, seriOption) {
+    function Chart(w_canvas, h_canvas, top_canvas, left_canvas, location_chart, w_chart, h_chart, 
+        gridOption, color, category_name, typeChart, data, seriOption) {
         var displayDataTable = arguments.length > 13 && arguments[13] !== undefined ? arguments[13] : false;
         var location_legend = arguments.length > 14 && arguments[14] !== undefined ? arguments[14] : {};
         var w_legend = arguments.length > 15 && arguments[15] !== undefined ? arguments[15] : 0;
@@ -2170,7 +2172,10 @@ var Chart = function () {
             if (this.typeChart == "columnChartTemplate1") {
                 var barChart = new BarChart(this);
                 barChart.draw(ctx);
-            } else if (this.typeChart == "lineChart_Template1") {
+            } else if(this.typeChart == "columnChartTemplate2"){
+                var columnChartTemplate2 = new ColumnChartTemplate2(this);
+                columnChartTemplate2.draw(ctx);
+            }else if (this.typeChart == "lineChart_Template1") {
                 var lineChart = new LineChart(this, true);
                 lineChart.draw(ctx);
                 // lineChart.lines();
@@ -2480,7 +2485,8 @@ var Chart = function () {
         value: function maxData() {
             var right = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 
-            if (this.typeChart == "lineChart_Template4" || this.typeChart == "lineChart_Template1" || this.typeChart == "columnChartTemplate1") {
+            if (this.typeChart == "lineChart_Template4" || this.typeChart == "lineChart_Template1" || this.typeChart == "columnChartTemplate1" 
+                || this.typeChart == "columnChartTemplate2") {
                 if (right) {
                     var maxData = this.maxDataLeftTemplate1(this.dataSecondAxis(), this.secondAxisOrderNum());
                 } else {
@@ -2745,17 +2751,17 @@ var BarChart = function () {
         value: function draw(ctx) {
             this.textCategoriesName(ctx);
             this.chart.drawGrid(ctx);
-            // this.drawColumn(ctx);
+            this.drawColumn(ctx);
             this.chart.drawLegend(ctx);
 
             var rects = this.rectsColumn();
             var objs = this.arrGSap(rects);
 
-            for (var i = 0; i < objs.length; i++) {
+            /*for (var i = 0; i < objs.length; i++) {
                 TweenLite.to(objs[i], 1, { h: rects[i].h * -1, ease: Quad.easeInOut, onUpdate: function onUpdate() {
                         onEnterFrame(objs, ctx);
                     } });
-            }
+            }*/
         }
     }, {
         key: "drawColumn",
@@ -2766,34 +2772,6 @@ var BarChart = function () {
                 rects[m].draw(ctx);
             }
         }
-
-        /*rectsColumnPrimaryAxis(){
-            var fill = true;
-            var rects = [];
-            var numSeri = this.chart.numSeri();
-            var numCategory = this.chart.numCategory();
-            var x;
-             var avgWidth = this.chart.avgWidth();
-             for (var j= 0; j < numCategory; j++) {
-                var bd = avgWidth * j + this.location_chart.x ;
-                bd = bd + this.marginGap();
-                for(var i= 0; i < numSeri; i++){
-                    var rec = [];
-                    var val = this.data[j][i];
-                    var h = this.chart.h_val(val);
-                    var y_val = this.chart.cacl_y(val);
-                    var w = this.width_gap();
-                    var color = this.color[i];
-                     x = bd +  i * w;
-                    
-                    var p1 = new Point(x, y_val);
-                    var rec = new Rect("rect", p1, w, h, color, fill);
-                    rects.push(rec);
-                }
-            }
-            return rects;
-        }*/
-
     }, {
         key: "drawRects",
         value: function drawRects() {
@@ -2807,7 +2785,6 @@ var BarChart = function () {
             var numCategory = this.chart.numCategory();
             var x = void 0;
             var secondAxis = this.chart.secondAxis;
-            // console.log(secondAxis[obj[0]]);
             var avgWidth = this.chart.avgWidth();
 
             for (var j = 0; j < numCategory; j++) {
@@ -2834,7 +2811,6 @@ var BarChart = function () {
         key: "rectsColumn",
         value: function rectsColumn() {
             //Dem
-
             var objPrimaryAxis = this.chart.primaryAxisOrderNum();
             var objSecondAxis = this.chart.secondAxisOrderNum();
 
@@ -2910,6 +2886,194 @@ var BarChart = function () {
     }]);
 
     return BarChart;
+}();
+
+var ColumnChartTemplate2 = function () {
+    function ColumnChartTemplate2(options) {
+        _classCallCheck(this, ColumnChartTemplate2);
+        debugger
+        // this.location_canvas = location_canvas;
+        this.options = options;
+        this.frameChart = options.frame[1];
+        this.frameCanvas = options.frame[0];
+        this.location_chart = new Point(this.frameChart.x, this.frameChart.y);
+        this.w_chart = this.frameChart.w;
+        this.h_chart = this.frameChart.h;
+        this.w_canvas = this.frameCanvas.w;
+        this.h_canvas = this.frameCanvas.h;
+        this.top_canvas = this.frameCanvas.top;
+        this.left_canvas = this.frameCanvas.left;
+        this.data = [[4.3, 2.5, 3.5, 4.5], [2.4, 4.4, 1.8, 2.8], [2, 2, 3, 5], [2, 2, 3, 5]];
+        this.gapWidth = 100;
+        this.color = options.seriesOption.map(function (x) {
+          return x.color;
+        });
+        this.category_name = this.options.data.map(function (x) {
+            return x.category;
+        });
+        this.location_legend = new Point(this.options.legend.x, this.options.legend.y);
+        this.displayDataTable = this.options.dataTable.display;
+        this.w_legend = options.legend.w;
+        this.h_legend = options.legend.h;
+        this.type_horizontal = options.dataTable.horizontal;
+        this.type_outline = options.dataTable.outline;
+        this.type_vertical = options.dataTable.vertical;
+        var gridOption = new GridLine(true, true, true, true);
+        // this.options.seriesOption.map(x => x.seriOption)
+        var gapWidth = [0, 500];
+        var secondAxis = [false, false, false, false];
+
+        var seriOption = new SeriOption(true, secondAxis, gapWidth);
+        this.chart = new Chart(this.w_canvas, this.h_chart, this.top_canvas, this.left_canvas, this.location_chart, 
+            this.w_chart, this.h_chart, gridOption, this.color, this.category_name, options.type, this.data, seriOption);
+        return this;
+    }
+
+    _createClass(ColumnChartTemplate2, [{
+        key: "draw",
+        value: function draw() {
+            var d = new Date();
+            var n = d.getTime();
+            var canv = new Canvas('can' + n, this.w_canvas, this.h_canvas, this.top_canvas, this.left_canvas);
+            var ctx = canv.genCanvas();
+
+            this.textCategoriesName(ctx);
+            this.chart.drawGrid(ctx);
+            this.drawColumn(ctx);
+            this.chart.drawLegend(ctx);
+
+            var rects = this.rectsColumn();
+            var objs = this.arrGSap(rects);
+
+            /*for (var i = 0; i < objs.length; i++) {
+                TweenLite.to(objs[i], 1, { h: rects[i].h * -1, ease: Quad.easeInOut, onUpdate: function onUpdate() {
+                        onEnterFrame(objs, ctx);
+                    } });
+            }*/
+        }
+    }, {
+        key: "drawColumn",
+        value: function drawColumn(ctx) {
+            var rects = this.rectsColumn();
+
+            for (var m = 0; m < rects.length; m++) {
+                rects[m].draw(ctx);
+            }
+        }
+    }, {
+        key: "drawRects",
+        value: function drawRects() {
+            var numObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.chart.numSeri();
+            var obj = arguments[1];
+            var gapWidth = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+
+            var fill = true;
+            var rects = [];
+            var numSeri = numObj;
+            var numCategory = this.chart.numCategory();
+            var x = void 0;
+            var secondAxis = this.chart.secondAxis;
+            var avgWidth = this.chart.avgWidth();
+
+            for (var j = 0; j < numCategory; j++) {
+                var bd = avgWidth * j + this.location_chart.x;
+                bd = bd + this.marginGap(numObj, gapWidth);
+                for (var i = 0; i < numSeri; i++) {
+                    var rec = [];
+                    var val = this.data[j][obj[i]];
+                    var h = this.chart.h_val(val, secondAxis[obj[i]]);
+                    var y_val = this.chart.cacl_y(val, secondAxis[obj[i]]);
+                    var w = this.width_gap(numObj, gapWidth);
+                    var color = this.color[obj[i]];
+
+                    x = bd + i * w;
+
+                    var p1 = new Point(x, y_val);
+                    rec = new Rect("rect", p1, w, h, color, fill);
+                    rects.push(rec);
+                }
+            }
+            return rects;
+        }
+    }, {
+        key: "rectsColumn",
+        value: function rectsColumn() {
+            //Dem
+            var objPrimaryAxis = this.chart.primaryAxisOrderNum();
+            var objSecondAxis = this.chart.secondAxisOrderNum();
+
+            //gapWidth
+            var gapWidthPrimaryAxis = this.chart.gapWidth[0];
+            var gapWidthSecondAxis = this.chart.gapWidth[1];
+
+            var rectAcordingPrimaryAxis = this.drawRects(objPrimaryAxis.length, objPrimaryAxis, gapWidthPrimaryAxis);
+            var rectAcordingSecondAxis = this.drawRects(objSecondAxis.length, objSecondAxis, gapWidthSecondAxis);
+            //rect
+            //return rectAcordingPrimaryAxis;
+            return rectAcordingPrimaryAxis.uniqueMerge(rectAcordingSecondAxis);
+        }
+    }, {
+        key: "arrGSap",
+        value: function arrGSap(rects) {
+            var objs = [];
+            for (var dem = 0; dem < rects.length; dem++) {
+                var b = { x: rects[dem].point.x, y: this.h_chart + this.location_chart.y, w: rects[dem].w, h: 0, fill: rects[dem].color };
+                objs.push(b);
+            }
+
+            return objs;
+        }
+    }, {
+        key: "width_gap",
+        value: function width_gap() {
+            var numObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.chart.numSeri();
+            var gapWidth = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+            var w_col = this.w_chart / (this.chart.numCategory() * (numObj + gapWidth / 100));
+            return w_col;
+        }
+    }, {
+        key: "marginGap",
+        value: function marginGap() {
+            var numObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.chart.numSeri();
+            var gapWidth = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+            return gapWidth / 100 * this.width_gap(numObj, gapWidth) / 2;
+        }
+    }, {
+        key: "textLegend",
+        value: function textLegend(ctx) {
+            this.textCategoriesName(ctx);
+        }
+    }, {
+        key: "textCategoriesName",
+        value: function textCategoriesName(ctx) {
+            var numCategory = this.chart.numCategory();
+            var numSeri = this.chart.numSeri();
+            var fontsize = 12;
+            var minX = this.location_chart.x;
+            var maxY = this.location_chart.y + this.h_chart;
+            var w_col = this.width_gap();
+            var avgWidth = this.chart.avgWidth();
+            var marginGap = this.marginGap();
+            var h_legend = this.chart.heightSizeLegend();
+
+            var dataTexts = [];
+            for (var i = 0; i < numCategory; i++) {
+                var text = this.category_name[i];
+                var x = minX + avgWidth * i + marginGap + (w_col * this.chart.numSeri - ctx.measureText(text).width * fontsize / 10) / 2;
+
+                // fontsize = 12
+                var y = this.chart.cal_y_vertical(maxY, 12, h_legend);
+                var point = new Point(x, y);
+                GenerateText(dataTexts, "text" + y, text, point, "Century Gothic", 12, "black", "start");
+            }
+
+            this.chart.drawText(dataTexts, ctx);
+        }
+    }]);
+
+    return ColumnChartTemplate2;
 }();
 
 var LineChart = function () {
@@ -3526,7 +3690,7 @@ window.onload = function () {
     // var data =[ [4.3, 2.4, 2, 3.2], [2.5, 4.4, 2, 2.1], [3.2, 1.8, 3, 4.3], [4.5, 5.1, 5.2, 1], [4.5, 5.1, 5.2, 1]];
     var data = [[2, 2.4, 4.3], [2, 4.4, 2.5], [3, 1.8, 3.5], [5, 2.8, 4.5]];
     var category_name = ["Category 1", "Category 2", "Category 3", "Category 4", "Category 5"];
-    var color = ["#6aa4d9", "#ed7d31", "#a5a5a5"];
+    var color = ["#6aa4d9", "#ed7d31", "#a5a5a5", "#ffc000"];
     var location_canvas = p1;
     var w_canvas = 920;
     var h_canvas = 427;
@@ -3534,7 +3698,6 @@ window.onload = function () {
     var location_legend = new Point(16, 325);
     var w_legend = 880;
     var h_legend = 74;
-    var gapWidth = [0, 500];
     // var typeChart = "columnChartTemplate1";
     // var typeChart = "lineChart_Template2";
     var typeChart = "lineChart_Template1";
@@ -3558,9 +3721,12 @@ window.onload = function () {
     var left_canvas1 = 25;
     var p2 = new Point(75, 43);
     var location_chart1 = p2;
-    var secondAxis = [false, false, true];
-    var data1 = [[12.3, 1.4, 2], [3.5, 14.4, 20], [3.2, 18, 13], [4.5, 5.1, 5.2], [4.5, 5.1, 5.2]];
-    var typeChart1 = "columnChartTemplate1";
+    // var data1 = [[12.3, 1.4, 2], [3.5, 14.4, 20], [3.2, 18, 13], [4.5, 5.1, 5.2], [4.5, 5.1, 5.2]];
+    var data1 = [[4.3, 2.5, 3.5, 4.5], [2.4, 4.4, 1.8, 2.8], [2, 2, 3, 5], [2, 2, 3, 5]];
+    var typeChart1 = "columnChartTemplate2";
+
+    var gapWidth = [0, 500];
+    var secondAxis = [false, false, false, false];
 
     var seriOption = new SeriOption(true, secondAxis, gapWidth);
 
@@ -3584,13 +3750,6 @@ window.onload = function () {
         "dataTable": dataTable,
         "seriOption": seriOption
     }, "displayDataTable", false);
-    // var chart1 = new Chart(w_canvas, h_canvas, top_canvas1, left_canvas1, location_chart1, 
-    //     w_chart, h_chart, color, category_name, typeChart1  , data1, gapWidth, secondAxis,
-    //     displayDataTable, location_legend, w_legend, h_legend, type_horizontal, type_outline, type_vertical);
-    // chart1.draw();
-    // veBieuDo(1, data,
-    // category_name, color, typeChart1, w_canvas, h_canvas, top_canvas1, left_canvas1, location_chart1, w_chart, h_chart, gridOption,
-    // gapWidth, secondAxis, displayDataTable = false);
 
     // veBieuDo(1, optionsBieuDoCot);
 
@@ -3685,7 +3844,7 @@ window.onload = function () {
     );
     myDougnutChart.draw();*/
 
-    var areaChart = new AreaChart({
+    /*var areaChart = new AreaChart({
         "title": {
             "text": "Monthly Downloads",
             "fontSize": 25,
@@ -3855,10 +4014,167 @@ window.onload = function () {
         }]
     });
 
-    areaChart.draw();
-    // debugger
+    areaChart.draw();*/
+    
 
+    var columnChartTemplate2 = new ColumnChartTemplate2({
+        "title": {
+            "text": "Column Chart Template 2",
+            "fontSize": 25,
+            "frame": {
+                "x": 136,
+                "y": 10,
+                "w": 119,
+                "h": 27
+            }
+        },
+        "type": "ColumnChartTemplate1",
+        "axes": {
+            "axes": [{
+                "horizontal": true,
+                "fontFamily": "Arial",
+                "fontsize": 13
+            }, {
+                "vertical": true,
+                "fontFamily": "Calibri",
+                "fontsize": 12
+            }]
+        },
+        "axisTitle": {
+            "axisTitles": [{
+                "horizontal": true,
+                "x": 10,
+                "y": 20,
+                "w": 200,
+                "h": 100
+            }, {
+                "vertical": true,
+                "x": 10,
+                "y": 300,
+                "w": 300,
+                "h": 100
+            }]
+        },
+        "dataTable": {
+            "display": true,
+            "horizontal": true,
+            "vertical": true,
+            "outline": true,
+            "isLegendKey": true
+        },
+        "gridLine": {
+            "primaryMajorHorizontal": true,
+            "primaryMinorHorizontal": true,
+            "primaryMajorVertical": false,
+            "primaryMinorVertical": false
+        },
+        "legend": {
+            "legend": "right",
+            "x": 175,
+            "y": 131,
+            "w": 170,
+            "h": 27
+        },
+        "dataLable": "show",
+        "seriesOption": [{
+            "name": "Series 1",
+            "seriOption": 1,
+            "color": "#5b9bd5",
+            "dataLable": true,
+            "legend": {
+                "x": 140,
+                "y": 310,
+                "font": "Arial",
+                "size": 20
+            }
+        }, {
+            "name": "Series 2",
+            "seriOption": 2,
+            "color": "#ed7d31",
+            "dataLable": true,
+            "legend": {
+                "x": 240,
+                "y": 310,
+                "font": "Arial",
+                "size": 20
+            }
+        }, {
+            "name": "Series 3",
+            "seriOption": 2,
+            "color": "#a5a5a5",
+            "dataLable": false,
+            "legend": {
+                "x": 340,
+                "y": 310,
+                "w": 30,
+                "h": 20,
+                "font": "Arial",
+                "size": 20
+            }
+        }],
+        "data": [{
+            "category": "Category 1",
+            "series": [{
+                "name": "Series 1",
+                "value": 4.3
+            }, {
+                "name": "Series 2",
+                "value": 2.4
+            }, {
+                "name": "Series 3",
+                "value": 2
+            }]
+        }, {
+            "category": "Category 2",
+            "series": [{
+                "name": "Series 1",
+                "value": 2.5
+            }, {
+                "name": "Series 2",
+                "value": 4.4
+            }, {
+                "name": "Series 3",
+                "value": 2
+            }]
+        }, {
+            "category": "Category 3",
+            "series": [{
+                "name": "Series 1",
+                "value": 3.5
+            }, {
+                "name": "Series 2",
+                "value": 1.8
+            }, {
+                "name": "Series 3",
+                "value": 3
+            }]
+        }, {
+            "category": "Category 4",
+            "series": [{
+                "name": "Series 1",
+                "value": 4.5
+            }, {
+                "name": "Series 2",
+                "value": 2.8
+            }, {
+                "name": "Series 3",
+                "value": 5
+            }]
+        }],
+        "frame": [{
+            "name": "Frame Canvas",
+            "w": 517,
+            "h": 407,
+            "top": 19,
+            "left": 30
+        }, {
+            "name": "Frame chart",
+            "w": 405,
+            "h": 187,
+            "x": 54,
+            "y": 63
+        }]
+    });
 
-    // Object.keys(optionsArea["data"][0])
-    // Object.values(optionsArea["data"][0])
+    columnChartTemplate2.draw();
 };
